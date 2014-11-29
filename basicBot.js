@@ -1,8 +1,7 @@
-/**
- *Copyright 2014 Yemasthui
+/**Copyright 2014 Yemasthui
  *Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
  *This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
- */
+*/
 
 
 (function () {
@@ -176,11 +175,11 @@
         loadChat: loadChat,
         retrieveSettings: retrieveSettings,
         settings: {
-            botName: "basicBot",
-            language: "english",
+            botName: "LevelBot",
+            language: "french",
             chatLink: "https://rawgit.com/Yemasthui/basicBot/master/lang/en.json",
             maximumAfk: 120,
-            afkRemoval: true,
+            afkRemoval: false,
             maximumDc: 60,
             bouncerPlus: true,
             lockdownEnabled: false,
@@ -192,38 +191,47 @@
             maximumSongLength: 10,
             autodisable: true,
             commandCooldown: 30,
-            usercommandsEnabled: true,
+            usercommandsEnabled: false,
             lockskipPosition: 3,
             lockskipReasons: [
-                ["theme", "This song does not fit the room theme. "],
-                ["op", "This song is on the OP list. "],
-                ["history", "This song is in the history. "],
-                ["mix", "You played a mix, which is against the rules. "],
-                ["sound", "The song you played had bad sound quality or no sound. "],
-                ["nsfw", "The song you contained was NSFW (image or sound). "],
-                ["unavailable", "The song you played was not available for some users. "]
+                ["theme", "J'aime juste pas ta musique. "],
+                ["op", "Ta musique est dans la liste OP \(je sais pas ce que sais OP\)"],
+                ["history", "Deja passer mec. "],
+                ["mix", "Tu respects pas les regles gars "],
+                ["sound", "Elle marche pas ta musique. "],
+                ["nsfw", "C'est pas une bonne musique. "],
+                ["unavailable", "C'est nul ta musique. "]
             ],
             afkpositionCheck: 15,
             afkRankCheck: "ambassador",
-            motdEnabled: false,
-            motdInterval: 5,
-            motd: "Temporary Message of the Day",
+            motdEnabled: true,
+            motdInterval: 10,
+            motd: "On remercie Kazsword et Zeboss pour ce magnifique bot !!",
             filterChat: true,
-            etaRestriction: false,
-            welcome: true,
+            etaRestriction: true,
+            welcome: false,
             opLink: null,
             rulesLink: null,
             themeLink: null,
             fbLink: null,
-            youtubeLink: null,
-            website: null,
+            youtubeLink: "https://www.youtube.com/watch?v=jDhvtfY1tzI" ,
+            website: "http://leveldown.fr",
             intervalMessages: [],
             messageInterval: 5,
-            songstats: true,
+            songstats: false,
             commandLiteral: "!",
             blacklists: {
-                NSFW: "https://rawgit.com/Yemasthui/basicBot-customization/master/blacklists/ExampleNSFWlist.json",
-                OP: "https://rawgit.com/Yemasthui/basicBot-customization/master/blacklists/ExampleOPlist.json"
+    "1":{
+        "mid": "1:NSFWsongID1"
+    },
+    "2":{
+        "title": "Warriors",
+        "author": "2014 World Championship (Imagine Dragons)",
+        "mid": "1:fmI_Ndrxy14"
+    },
+    "3":{
+        "mid": "1:NSFWsongID3"
+}
             }
         },
         room: {
@@ -271,8 +279,9 @@
             blacklists: {
 
             },
+
             newBlacklisted: [],
-            newBlacklistedSongFunction: null,
+            newBlacklistedSongFunction: null, 
             roulette: {
                 rouletteStatus: false,
                 participants: [],
@@ -680,7 +689,8 @@
                     }
                 }
             },
-            logNewBlacklistedSongs: function () {
+
+	   logNewBlacklistedSongs: function () {
                 if (typeof console.table !== 'undefined') {
                     console.table(basicBot.room.newBlacklisted);
                 }
@@ -1173,7 +1183,7 @@
             basicBot.loggedInID = API.getUser().id;
             basicBot.status = true;
             API.sendChat('/cap 1');
-            API.setVolume(0);
+            API.setVolume(26);
             var emojibutton = $(".icon-emoji-on");
             if (emojibutton.length > 0) {
                 emojibutton[0].click();
@@ -1422,6 +1432,32 @@
                 }
             },
 
+	ZebossCommand: {
+	    command: 'zeboss',
+	    rank: 'user',
+    type: 'exact',
+               functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                   if (!basicBot.commands.executable(this.rank, chat)) return void (0);
+                   else {
+                       API.sendChat( "/me Zeboss111 est l’un des videurs du plugDj Leveldown. Il a grandement participe, avec Kazesword, à l’arrivee de ce bot. Les styles musicaux de zeboss sont varies : Rock, Metal, Electro, Variété Francaise, 1D, MLP, Disney …" );
+                   }
+                }
+            },
+
+TheRexiCommand: {
+	    command: 'therexi',
+	    rank: 'user',
+    type: 'exact',
+               functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                   if (!basicBot.commands.executable(this.rank, chat)) return void (0);
+                   else {
+                       API.sendChat( "/me TheRexi est le patron, tu lui devras le respect à vie, même si il est très tétu" );
+                   }
+                }
+            },
+
             banCommand: {
                 command: 'ban',
                 rank: 'bouncer',
@@ -1530,25 +1566,25 @@
                 }
             },
 
-            cookieCommand: {
+          cookieCommand: {
                 command: 'cookie',
                 rank: 'user',
                 type: 'startsWith',
-                cookies: ['has given you a chocolate chip cookie!',
-                    'has given you a soft homemade oatmeal cookie!',
-                    'has given you a plain, dry, old cookie. It was the last one in the bag. Gross.',
-                    'gives you a sugar cookie. What, no frosting and sprinkles? 0/10 would not touch.',
-                    'gives you a chocolate chip cookie. Oh wait, those are raisins. Bleck!',
-                    'gives you an enormous cookie. Poking it gives you more cookies. Weird.',
-                    'gives you a fortune cookie. It reads "Why aren\'t you working on any projects?"',
-                    'gives you a fortune cookie. It reads "Give that special someone a compliment"',
-                    'gives you a fortune cookie. It reads "Take a risk!"',
-                    'gives you a fortune cookie. It reads "Go outside."',
-                    'gives you a fortune cookie. It reads "Don\'t forget to eat your veggies!"',
-                    'gives you a fortune cookie. It reads "Do you even lift?"',
-                    'gives you a fortune cookie. It reads "m808 pls"',
-                    'gives you a fortune cookie. It reads "If you move your hips, you\'ll get all the ladies."',
-                    'gives you a fortune cookie. It reads "I love you."',
+                cookies: ['te donne un cookie bon marché au chocolat tout ce qu\’il y a de plus normal !',
+                    'ne te donne pas de cookie : t\’as vu le prix d\’un cookie ?!', 
+                    't\’as donné un cookie sec et vieux . C\’etait le dernier du paquet.',
+                    'va chercher un katana pour te donner un cookie fait mal.',
+                    'te donne gentiment un cookie aux extraits de GHB, recette heritee de tonton Michel.',
+                    'te donne un cookie aux pepites de chocolat et eclats d\’amande. Bon appetit, enfin un cookie normal !',
+                    'te salue avec un kiecoo, oups ! (kikou, humour quoi, enorme blague ! )', 
+                    'te sermonne : "C\’est pas en restant ici a manger des cookies que tu vas faire quelque chose de ta vie !"',
+                    'te rackette tes cookies wesh !', 
+                    'te donne un enorme coockie en forme de coeur. Dommage que ce ne soit qu\’un reve et qu\’on te reveille avec un sceau d’eau glacee dans la face.',
+                    'te donne un cookie du bonheur, il y a un message en Menzorien que tu ne comprends pas (sûrement une malédiction sur 12 générations).',
+                    'mange tranquillement des cookies devant toi en te regardant mourir de faim.', 
+                    'ne peux pas te donner de cookies car tu comprends “un gnome manchot est venu lui voler son stock et à laissé que les emballages”...',
+                    'te fait payer 5€ le cookie.',
+                    'te fait avaler un parpaing, il y avait plus de cookie.',
                     'gives you a Golden Cookie. You can\'t eat it because it is made of gold. Dammit.',
                     'gives you an Oreo cookie with a glass of milk!',
                     'gives you a rainbow cookie made with love :heart:',
@@ -1587,7 +1623,8 @@
                 }
             },
 
-            cycleCommand: {
+
+  cycleCommand: {
                 command: 'cycle',
                 rank: 'manager',
                 type: 'exact',
@@ -2459,7 +2496,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!basicBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                        API.sendChat('/me This bot was made by ' + botCreator + '.');
+                        API.sendChat('/me Ce bot à été créer par ' + botCreator + '.');
                     }
                 }
             },
@@ -2828,3 +2865,4 @@
 
     loadChat(basicBot.startup);
 }).call(this);
+
